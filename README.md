@@ -2,4 +2,4 @@
 
 Fly branch - для задач леталок
 
-SmartCitybranch - для задач умного города
+SmartCity branch - для задач умного города
