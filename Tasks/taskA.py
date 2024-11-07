@@ -1,19 +1,31 @@
-n = int(input())
-sec =  list(map(int, input().split()))
+import bisect
+import sys
 
-a = 1/3
-b = 1/2
-c = 1/6
-p = c/a-b**2/(3*a**2)
 
-count = 0
-for i in range(n):
-    q = 2 * b**3 / (27 * a**3) - b * c / (3 * a**2) - sec[i] / a
-    Q1 = (p / 3)**3 + (q / 2)**2
-    alpha = (-q / 2 + Q1**0.5)**(1 / 3)
-    beta = (-q / 2 - Q1**0.5)**(1 / 3)
-    y = alpha + beta
-    x = y - b / (3 * a)
-    x = round(x, 9)
-    count+=int(x)
-print(count)
+try:
+    with open("input.txt", "r") as f:
+        n = int(f.readline().strip())
+        times = list(map(int, f.readline().strip().split()))
+except FileNotFoundError:
+    n = int(input().strip())
+    times = list(map(int, input().strip().split()))
+
+cumulative_durations = []
+current_duration = 0
+k = 1
+
+while current_duration <= 10**9:
+    current_duration += k * k
+    cumulative_durations.append(current_duration)
+    k += 1
+
+total_ads = 0
+for time in times:
+    ads_watched = bisect.bisect_right(cumulative_durations, time)
+    total_ads += ads_watched
+
+try:
+    with open("output.txt", "w") as f:
+        f.write(str(total_ads))
+except FileNotFoundError:
+    print(total_ads)
