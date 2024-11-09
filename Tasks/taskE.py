@@ -7,5 +7,5 @@ for i in range(q):
     q = np.tri(h, dtype=int)*v
     summer[n-(y+h)+1:n-(y+h)+1+h, x-1:x+h-1] += q
 
-np.savetxt('summer.txt', summer, delimiter=' ', fmt='%d')
+np.savetxt('output.txt', summer, delimiter=' ', fmt='%d')
 
