@@ -8,4 +8,3 @@ for i in range(q):
     summer[n-(y+h)+1:n-(y+h)+1+h, x-1:x+h-1] += q
 
 np.savetxt('output.txt', summer, delimiter=' ', fmt='%d')
-
