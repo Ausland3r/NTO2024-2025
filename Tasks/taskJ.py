@@ -35,6 +35,13 @@ def isfloat(value):
 
 
 firstComponent = components[0].split(' ')
+frequency = components[1].split(' ')
+
+if firstComponent[0] == 'w':
+    z = firstComponent
+    firstComponent = frequency
+    frequency = z
+
 
 if (len(firstComponent) != 4 or not isfloat(firstComponent[2]) or float(firstComponent[2]) <= 0.0 or
         firstComponent[1] != '=' or (
@@ -44,7 +51,6 @@ if (len(firstComponent) != 4 or not isfloat(firstComponent[2]) or float(firstCom
     print('Wrong format')
     sys.exit()
 
-frequency = components[1].split(' ')
 
 if len(frequency) != 4 or not isfloat(frequency[2]) or float(frequency[2]) <= 0.0 or frequency[1] != '=' or (
         frequency[0] != 'w' or frequency[3] != 'rad/s'):
