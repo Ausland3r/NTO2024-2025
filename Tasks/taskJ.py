@@ -59,20 +59,20 @@ if len(frequency) != 4 or not isfloat(frequency[2]) or float(frequency[2]) <= 0.
 
 if firstComponent[0] == 'C':
     R = 1/(float(frequency[2]) * float(firstComponent[2]) * 10**-6)
-    print(f"{filterType}, C = {float(firstComponent[2]):.2f} uF, R = {R:.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
+    print(f"{filterType}, C = {float(firstComponent[2]):.2f} uF, R = {int(R * 100) / 100.0:.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
 
 elif firstComponent[0] == 'L':
     R = float(frequency[2]) * float(firstComponent[2])
-    print(f"{filterType}, L = {float(firstComponent[2]):.2f} H, R = {R:.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
+    print(f"{filterType}, L = {float(firstComponent[2]):.2f} H, R = {int(R * 100) / 100.0:.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
 
 elif firstComponent[0] == 'R':
     filterType1 = filterType.split(' ')
     if filterType1[1] == 'RC':
         C = (1 / (float(frequency[2]) * float(firstComponent[2]))) / 10**-6
-        print(f"{filterType}, C = {C:.2f} uF, R = {float(firstComponent[2]):.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
+        print(f"{filterType}, C = {int(C * 100) / 100.0:.2f} uF, R = {float(firstComponent[2]):.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
     elif filterType1[1] == 'RL':
         L = float(frequency[2]) / float(firstComponent[2])
-        print(f"{filterType}, L = {L:.2f} H, R = {float(firstComponent[2]):.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
+        print(f"{filterType}, L = {int(L * 100) / 100.0:.2f} H, R = {float(firstComponent[2]):.2f} Ohm, w = {float(frequency[2]):.2f} rad/s")
 
 # if (len(argv) != 3):
 #     print('Missing parameters')
