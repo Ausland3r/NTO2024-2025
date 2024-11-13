@@ -4,6 +4,11 @@ inputString = input()
 
 filterTypes = ['low-pass RC', 'low-pass RL', 'high-pass RC', 'high-pass RL']
 
+if len(inputString.split(',')) > 3:
+    print('Wrong format')
+    sys.exit()
+
+
 if ',' in inputString:
     filterType, typeData = inputString.split(',', 1)
 else:
@@ -56,6 +61,11 @@ if len(frequency) != 4 or not isfloat(frequency[2]) or float(frequency[2]) <= 0.
         frequency[0] != 'w' or frequency[3] != 'rad/s'):
     print('Wrong format')
     sys.exit()
+
+if firstComponent[0] not in filterType.split(' ')[1]:
+    print('Wrong format')
+    sys.exit()
+
 
 if firstComponent[0] == 'C':
     R = 1/(float(frequency[2]) * float(firstComponent[2]) * 10**-6)
