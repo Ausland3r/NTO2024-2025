@@ -10,26 +10,43 @@ R1, C1, R2, C2 = [float(x) for x in input().split()]
 tau1 = calculateTau(R1, C1)
 tau2 = calculateTau(R2, C2)
 
-
 uMaxPercent = 0.95
 uMinPercent = 0.05
 
-tDischargeDc = max(1, math.ceil(tau1 * math.log(uMaxPercent / uMinPercent)))
-tChargeDc = max(1, math.ceil(tau1 * math.log((1 - uMinPercent) / (1 - uMaxPercent))))
+vMax = 5
+vMin = 0
 
-tDischargeDStcp = max(1, math.ceil(tau2 * math.log(uMaxPercent / uMinPercent)))
-tChargeStcp = max(1, math.ceil(tau2 * math.log((1 - uMinPercent) / (1 - uMaxPercent))))
+
+tDischargeDC = -tau1 * math.log((vMin - vMax * uMinPercent) / (vMin - vMax*uMaxPercent))
+tDischargeDC = max(1, math.ceil(tDischargeDC))
+
+vAfterDischargeDC = vMin - (vMin - vMax*uMaxPercent) * math.exp(-tDischargeDC/tau1)
+
+tChargeDC = -tau1 * math.log((vMax - vMax*uMaxPercent) / (vMax - vAfterDischargeDC))
+tChargeDC = max(1, math.ceil(tChargeDC))
+
+
+tDischargeSTCP = - tau2 * math.log((vMin - vMax * uMinPercent)/ (vMin - vMax*uMaxPercent))
+tDischargeSTCP = max(1, math.ceil(tDischargeSTCP))
+
+vAfterDischargeSTCP = vMin - (vMin - vMax*uMaxPercent) * math.exp(-tDischargeSTCP/tau2)
+
+tChargeSTCP = -tau2 * math.log((vMax - vMax*uMaxPercent) / (vMax - vAfterDischargeSTCP))
+tChargeSTCP = max(1, math.ceil(tChargeSTCP))
+
 
 
 def calculateBit(bitData):
     output = []
     if bitData == '1':
         output.append((0, 1))
-        vPulse = uMaxPercent * math.exp(-1/tau1)
-        output.append((1, max(1, math.ceil(tau1 * math.log((1 - vPulse) / (1 - uMaxPercent))))))
+        vPulse = vMin - (vMin - vMax*uMaxPercent) * math.exp(-1/tau1)
+        tCharge = -tau1 * math.log((vMax - vMax*uMaxPercent) / (vMax - vPulse))
+        tCharge = max(1, math.ceil(tCharge))
+        output.append((1, tCharge))
     else:
-        output.append((0, tDischargeDc))
-        output.append((1, tChargeDc))
+        output.append((0, tDischargeDC))
+        output.append((1, tChargeDC))
     return output
 
 
@@ -39,15 +56,13 @@ inputArray = input().split(' ')
 for value in inputArray:
     byte = int(value, 16)
 
-    for state, time in calculateBit('1'):
-        print(f"{state} - {time}")
-
-    for i in range(6, 0, -1):
+    for i in range(7, 0, -1):
         bit = (byte >> i) & 1
         for state, time in calculateBit(str(bit)):
             print(f"{state} - {time}")
 
-    print(f"0 - {tDischargeDStcp}")
-    print(f"1 - {tChargeStcp}")
+    print(f"0 - {tDischargeSTCP}")
+    print(f"1 - {tChargeSTCP}")
+
 
 
