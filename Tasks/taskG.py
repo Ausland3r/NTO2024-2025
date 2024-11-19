@@ -29,5 +29,9 @@ f = (f1 + f2 + f3 + f4) / 4
 print(round(f))
 
 mag = 1 / math.sqrt(1 + (frequency / f) ** (2*7))
-
-print(f"{mag:.2g}")
+if mag < 10**-9:
+    print(0)
+else:
+    mag2 = float(f"{mag:.2g}")
+    mag2_formated = f"{mag2:.15f}".rstrip('0').rstrip('.')
+    print(mag2_formated)
