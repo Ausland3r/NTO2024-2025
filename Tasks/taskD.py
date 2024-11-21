@@ -113,7 +113,8 @@ def is_valid_solution(node: TreeNode) -> bool:
 def find_solutions(input_data: Tuple[int, List[int]]) -> List[int]:
     n, coins = input_data
     if n < 3:
-        return coins[:1]
+        coins.append(sum(coins))
+        return [coin for coin in coins if 1 <= coin <= 49]
 
     root, level_nodes, parent_map = build_tree_and_group_levels(n, coins)
     solution_set = set()
