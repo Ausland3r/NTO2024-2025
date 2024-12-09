@@ -63,10 +63,17 @@ def findFrequenciesForMagnitude(targetMagnitude = -3):
         freqR+=1
         magL=magR
 
-freq = findFrequenciesForMagnitude()
-freq = round(freq)
+
+freq_n = findFrequenciesForMagnitude()
+if freq_n < 100.0:
+    freq = round(freq_n)
+elif freq_n >= 100.0 and freq_n <= 1000.0:
+    freq = int(round(freq_n / 10.0) * 10)
+elif freq_n > 1000.0:
+    freq = int(round(freq_n / 100.0) * 100)
+
 print(freq)
-mag = (1/np.sqrt(1+(frequency/freq)**(2*7)))
+mag = (1/np.sqrt(1+(frequency/freq_n)**(2*7)))
 if mag < 10**-9:
     print(0)
 else:
