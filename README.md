@@ -25,5 +25,5 @@ git commit -m "комментарий"
 git push origin SmartCity
 ```
 
-## 5. Сделал merge в main? - Получил по ебалу
-## 6. Сделал push в main? - Получил по ебалу
+## 5. Сделал merge в main? - Плохо
+## 6. Сделал push в main? - Плохо
